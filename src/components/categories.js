@@ -21,7 +21,7 @@ export default function Links() {
         e.preventDefault();
         //show state
 
-    }
+    };
     return (
         <Typography className={classes.root}>
             <Link href="#" onClick={showCategories}>

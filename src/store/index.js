@@ -2,12 +2,13 @@ import { createStore, combineReducers } from 'redux';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import show from './categories.js';
+import activator from './categories.js';
+import list from './products.js';
 
-let reducers = combineReducers({show});
+let reducers = combineReducers({activator , list});
 
 const store = () => {
-    return createStore(reducers, composeWithDevTools());
+  return createStore(reducers, composeWithDevTools());
 
 };
 

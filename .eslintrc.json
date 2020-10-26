@@ -14,12 +14,22 @@
     "sourceType": "module",
     "ecmaVersion": 2018
   },
+  "plugins": [
+    "jsx-a11y"
+  ],
   "rules": {
     "no-console": "off",
-    "indent": [ "error", 2 ],
+    "indent":"off",
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "comma-dangle": ["error", "always-multiline"],
     "semi": [ "error", "always" ],
-    "no-unused-vars": [1, {"vars": "local", "args": "none"}]
+    "no-unused-vars": [1, {"vars": "local", "args": "none"}],
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "hrefLeft", "hrefRight" ],
+      "aspects": [ "noHref", "invalidHref", "preferButton" ]
+    }]
+    
   }
 }
+

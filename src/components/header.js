@@ -1,36 +1,22 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/core/Menu';
+import { Grid, AppBar, CssBaseline, Toolbar, Typography } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  Cart: {
-    marginLeft: theme.spacing(200),
-  },
-}));
 
-export default function Header() {
-  const classes = useStyles();
+function Header() {
+    return (
+        <>
+            <CssBaseline />
+            <AppBar position="static" elevation={0} className="MuiAppBar-root">
+                <Toolbar className="">
+                    <Grid container justify="space-between" alignItems="center">
+                        <Typography variant="h4">Our Store</Typography>
+                        <Typography variant="h6">Cart 0</Typography>
+                    </Grid>
+                </Toolbar>
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          
-          <Typography variant="h6" color="inherit">
-            Our Store
-          </Typography>
-          <Typography variant="h6" color="inherit" className={classes.Cart}>
-            Cart {0}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+            </AppBar>
+        </>
+    );
 }
+
+export default Header;

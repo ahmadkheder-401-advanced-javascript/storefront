@@ -1,81 +1,48 @@
-/* eslint-disable no-unreachable */
-let initalState = {
-    categories: [
-        {
-            name: 'Electronices', items: [
-                {
-                    img: null,
-                    title: 'TV',
-                    desc: 'see all'
-                },
-                {
-                    img: null,
-                    title: 'MacBook',
-                    desc: 'do all things'
-                }
+/* eslint-disable no-case-declarations */
 
+let initialState = {
+  categories: [
+    {
+      name: 'ELECTRONICS',
+      displayName: 'Adidas display',
+      desciption: 'Category Description Goes Here',
 
-            ]
-        },
-        {
-            name: 'Food', items: [
-                {
-                    img: null,
-                    title: 'breakfast',
-                    desc: 'eat eat eat it'
-                },
-                {
-                    img: null,
-                    title: 'lunch',
-                    desc: 'eat it'
-                }
+    },
+    {
+      name: 'FOOD',
+      displayName: 'Gucci display',
+      desciption: 'Category Description Goes Here',
+    },
 
-
-
-            ]
-        }
-    ]
-    // totalVotes: 0
+  ],
+  current: '',
 };
 
-// reducer
-export default (state = initalState, action) => {
+//reducer
+export default (state = initialState, action) => {
+  let { type, payload } = action;
 
-    let { type, payload } = action;
-    switch (type) {
-        case 'Electronices':
+  switch (type) {
+  case 'change':
+    let current = payload;
+    let categories = state.categories.map(item=> {
+      if(item.name === payload) {
+        return {name: item.name ,
+          displayName : item.displayName ,
+          desciption: item.desciption};
+      }
+      return item ;
+    });
+    return { categories, current };
 
-            let electronices = state.electronices.map((item, idx) => {
-                return item;
-
-            });
-            return { electronices };
-
-        case 'Food':
-
-            let food = state.food.map((item, idx) => {
-                return item;
-
-            });
-            return { food };
+  default:
+    return state;
+  }
+};
 
 
-        default:
-            return state;
-    }
-}
-// }//////////////////////////////ERROR
-// actions
-export const electronices = (name) => {
-    return {
-        type: 'Electronices',
-        payload: name
-    }
-}
-
-export const food = (name) => {
-    return {
-        type: 'Food',
-        payload: name
-    }
-}
+// action
+export const change = (activated) => {
+  return { type: 'change', payload: activated,
+};
+};
