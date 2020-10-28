@@ -1,63 +1,64 @@
 /* eslint-disable no-case-declarations */
 let initialState = {
-  products: [
-    {
-      category: 'ELECTRONICS',
-      name: 'TV',
-      description: 'SAMSUNG TV 50 INCH ',
-      inventoryCount: 200,
-      price: '$100',
-      image: 'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6268/6268403_sd.jpg',
-    },
-    {
-      category: 'ELECTRONICS',
-      name: 'TV',
-      description: 'LG TV 40 inch',
-      inventoryCount: 40,
-      price: '$200',
-      image: 'https://e-spotechnologies.com/wp-content/uploads/2020/02/LG-32LM630BPVB.jpg',
-    },
+    products: [
+        {
+            category: 'ELECTRONICS',
+            name: ' Fridge',
+            description: 'RIPHAT ELECTRONICS CO.LTD',
+            inventoryCount: 100,
+            price: '$1000',
+            image: 'https://1.bp.blogspot.com/-rYdTbpmM570/TuSrvfUBgfI/AAAAAAAAACk/k9G-knO4PVU/s1600/lg_electronics_announces_hdtv_fridge-1%255B1%255D.jpg',
+          },
+          {
+            category: 'ELECTRONICS',
+            name: ' Coffee Maker',
+            description: 'Mainstays 5 Cup Black Coffee Maker with Removable Filter Basket',
+            inventoryCount: 100,
+            price: '$50',
+            image: 'https://www.procureshop.com/wp-content/uploads/2020/05/Cofee-maker.jpeg',
+          },
 
-    {
-      category: 'FOOD',
-      name: 'chips',
-      description: 'DORITOS CHIPS IS THE BEST ',
-      inventoryCount: 600,
-      price: '$3',
-      image: 'https://images-na.ssl-images-amazon.com/images/I/81kZD%2BSrSDL._SY445_.jpg',
-    },
-    {
-      category: 'FOOD',
-      name: 'chochlate',
-      description: 'snikers chochlate',
-      inventoryCount: 100,
-      price: '$1.50',
-      image: 'https://www.kroger.com/product/images/xlarge/front/0004000044327',
-    },
+          {
+            category: 'FOOD',
+            name: 'avocado',
+            description: 'avocado piece ',
+            inventoryCount: 100,
+            price: '$12',
+            image: 'https://www.jessicagavin.com/wp-content/uploads/2019/04/how-to-cut-an-avocado-12-1200-500x375.jpg',
+          },
+          {
+            category: 'FOOD',
+            name: 'candy',
+            description: 'candies',
+            inventoryCount: 100,
+            price: '$7',
+            image: 'https://www.mediashower.com/img/BF771BB8-9FA6-11E9-9417-4880D1DBB55F/colorful%20candy%20assortment_600x.jpg',
+          },
 
-  ],
-  results: [],
+    ],
+    results: [],
 };
-
 export default (state = initialState, action) => {
-  let { type, payload } = action;
+    let { type, payload } = action;
 
-  switch (type) {
-  case 'choose':
-    let products = state.products;
-    let results = state.products.filter((item,idx)=> {
-      return item.category === payload.name;
-    });
-    return { results, products };
+    switch (type) {
+        case 'choose':
+            let products = state.products;
+            let results = state.products.filter((item,idx)=> {
+                return item.category === payload.name;
+            });
+            return { results, products };
 
-  default:
-    return state;
-  }
+        default:
+            return state;
+    }
 
 };
+
+// action
 export const chooseList = (clicked) => {
-  return {
-    type: 'choose',
-    payload: clicked,
-  };
+    return {
+        type: 'choose',
+        payload: clicked,
+    };
 };

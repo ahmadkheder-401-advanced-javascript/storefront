@@ -1,41 +1,65 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-duplicate-case */
+/* eslint-disable no-case-declarations */
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
+import { change } from '../store/categories.js';
+import { chooseList } from '../store/products.js';
+import { Box, ButtonGroup, Button, CssBaseline } from '@material-ui/core';
+
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > * + *': {
-            marginLeft: theme.spacing(2),
+    '@global': {
+        ul: {
+            margin: 0,
+            padding: 0,
+            listStyle: 'none',
         },
+    },
+    heroContent: {
+        padding: theme.spacing(8, 0, 6),
+    },
+    browseCategories: {
+        padding: 4,
+        margin: 4,
     },
 }));
 
-export default function Links() {
+
+const Status = props => {
+
     const classes = useStyles();
-    const preventDefault = (event) => event.preventDefault();
-
-
-    const showCategories = (e) => {
-        e.preventDefault();
-        //show state
-
-    };
     return (
-        <Typography className={classes.root}>
-            <Link href="#" onClick={showCategories}>
-                Electronices
-      </Link>       |
+        <>
+            <CssBaseline />
+            <Box>
+                <h2 className={classes.browseCategories}>Browse our Categories</h2>
 
-            <Link href="#" onClick={showCategories} variant="body2">
-                Food
-      </Link>
-        </Typography>
-    );
+                <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
+
+                    {props.current.categories.map((item,idx) => (
+                        <Button key={idx} onClick={() => {
+                            props.change(item);
+                            props.chooseList(item);
+
+                        }} >
+                            {item.name}
+
+                        </Button>
+                    ))}
+                </ButtonGroup>
+            </Box>
+
+        </>
+    )
 }
 
+const mapStateToProps = state => {
+    return { current: state.activator };
+}
+
+const mapDispatchToProps = { change, chooseList }
 
 
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(Status);

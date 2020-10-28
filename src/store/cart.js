@@ -1,9 +1,9 @@
+/* eslint-disable no-duplicate-case */
 /* eslint-disable no-case-declarations */
 let initialState = {
     cart: [],
-    count: 0,
+    count: 0
 };
-
 export default (state = initialState, action) => {
     let { type, payload } = action;
     let count = state.count;
@@ -12,18 +12,15 @@ export default (state = initialState, action) => {
     switch (type) {
         case 'cart':
             let length = state.cart.length;
-            payload = { ...payload, id: length + 1 },
-
+            payload = { ...payload, id: length + 1 };
             count = state.count + 1;
             return { cart: [...state.cart, payload], count };
-
         case 'removeFromCart':
             cart = cart.filter(item => {
                 if (item.id !== payload.id) {
                     return item;
                 }
             });
-
             count = state.count - 1;
             return { cart, count };
 
@@ -32,15 +29,12 @@ export default (state = initialState, action) => {
     }
 
 };
-
-
 export const addToCart = (add) => {
     return {
         type: 'cart',
         payload: add,
     };
 };
-
 export const removeFromCart = (remove) => {
     return {
         type: 'removeFromCart',
