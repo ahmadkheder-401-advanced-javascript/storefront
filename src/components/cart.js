@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-duplicate-case */
-/* eslint-disable no-case-declarations */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { addToCart } from '../store/cart.js'
-import { removeFromCart } from '../store/cart.js'
 import { CardMedia, Container, Grid, Card, CardContent, CardActions, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import * as actions from '../store/cart';
+import * as actionsProduct from '../store/products';
+
 const useStyles = makeStyles((theme) => ({
     '@global': {
         ul: {
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     media: {
         height: 0,
-        paddingTop: '56.25%', // 16:9
+        paddingTop: '56.25%',
         borderTopLeftRadius: '5px',
         borderTopRightRadius: '5px'
     },
@@ -48,15 +47,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
-
 const Cart = props => {
+
+    useEffect(() => {
+        props.getCartAPI();
+
+    }, []);
+    const deleteProductsfromCart = (idx, element) => {
+        props.removeFromCart(idx);
+        props.incrementInStock(element);
+    }
 
     const classes = useStyles();
 
     return (
         <>
-            {props.cart.cart.map((item,idx) => {
+            {props.cartData.cartItem.map((element, idx) => {
                 return (
                     <>
                         <Container key={idx} maxWidth="md" component="main">
@@ -67,19 +73,19 @@ const Cart = props => {
 
                                         <CardMedia key={idx}
                                             className={classes.media}
-                                            image={item.image}
-                                            title={item.name}
+                                            image={element.img}
+                                            title={element.name}
                                         />
                                         <CardContent >
 
                                             <Typography variant="h5" color="textPrimary">
-                                                {item.name}
+                                                {element.name}
                                             </Typography>
 
                                         </CardContent>
 
                                         <CardActions>
-                                            <Button key={idx} style={{ fontSize: '0.8125rem' }} color="primary" onClick={() => { props.removeFromCart(item) }} >X</Button>
+                                            <Button key={idx} style={{ fontSize: '1rem' }} color="primary" onClick={() => deleteProductsfromCart(idx , element)} >X</Button>
                                         </CardActions>
 
                                     </Card>
@@ -96,11 +102,12 @@ const Cart = props => {
         </>
     )
 }
-
-const mapStateToProps = state => {
-    return state;
-}
-
-const mapDispatchToProps = { addToCart, removeFromCart }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+const mapStateToProps = state => ({
+    cartData: state.cartData
+});
+const mapDispatchToProps = (dispatch, getState) => ({
+    getCartAPI: () => dispatch(actions.getCartAPI()),
+    removeFromCart: (productidx) => dispatch(actions.removeFromCart(productidx)),
+    incrementInStock: (product) => dispatch(actionsProduct.incrementInStock(product)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

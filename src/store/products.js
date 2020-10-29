@@ -1,64 +1,62 @@
-/* eslint-disable no-case-declarations */
+import superagent from 'superagent';
+
 let initialState = {
-    products: [
-        {
-            category: 'ELECTRONICS',
-            name: ' Fridge',
-            description: 'RIPHAT ELECTRONICS CO.LTD',
-            inventoryCount: 100,
-            price: '$1000',
-            image: 'https://1.bp.blogspot.com/-rYdTbpmM570/TuSrvfUBgfI/AAAAAAAAACk/k9G-knO4PVU/s1600/lg_electronics_announces_hdtv_fridge-1%255B1%255D.jpg',
-          },
-          {
-            category: 'ELECTRONICS',
-            name: ' Coffee Maker',
-            description: 'Mainstays 5 Cup Black Coffee Maker with Removable Filter Basket',
-            inventoryCount: 100,
-            price: '$50',
-            image: 'https://www.procureshop.com/wp-content/uploads/2020/05/Cofee-maker.jpeg',
-          },
-
-          {
-            category: 'FOOD',
-            name: 'avocado',
-            description: 'avocado piece ',
-            inventoryCount: 100,
-            price: '$12',
-            image: 'https://www.jessicagavin.com/wp-content/uploads/2019/04/how-to-cut-an-avocado-12-1200-500x375.jpg',
-          },
-          {
-            category: 'FOOD',
-            name: 'candy',
-            description: 'candies',
-            inventoryCount: 100,
-            price: '$7',
-            image: 'https://www.mediashower.com/img/BF771BB8-9FA6-11E9-9417-4880D1DBB55F/colorful%20candy%20assortment_600x.jpg',
-          },
-
-    ],
+    products: [],
     results: [],
-};
+}
+
 export default (state = initialState, action) => {
     let { type, payload } = action;
 
     switch (type) {
-        case 'choose':
-            let products = state.products;
-            let results = state.products.filter((item,idx)=> {
-                return item.category === payload.name;
+
+        case 'GETPRODUCT':
+            return payload;
+
+        case 'DEC-CART':
+            state.results.forEach((element) => {
+                if (element.name === payload.name) element.inStock--;
             });
-            return { results, products };
+            return { ...state };
+
+        case 'INC-CART':
+            state.results.forEach((element) => {
+                if (element.name === payload.name) element.inStock++;
+            });
+            return { ...state };
 
         default:
             return state;
     }
 
-};
+}
 
-// action
-export const chooseList = (clicked) => {
+export const getRemoteProducts = () => (dispatch) => {
+    var apiProduct = 'https://todos-api1.herokuapp.com/api/v1/products';
+    return superagent.get(apiProduct)
+        .then(data => {
+            dispatch(getActionProducts(data.body));
+        })
+}
+
+
+export const getActionProducts = payload => {
     return {
-        type: 'choose',
-        payload: clicked,
-    };
-};
+        type: 'GETPRODUCT',
+        payload: payload
+    }
+}
+
+export const decrementInStock = (name) => {
+    return {
+        type: 'DEC-CART',
+        payload: name
+    }
+}
+
+export const incrementInStock = (name) => {
+    return {
+        type: 'INC-CART',
+        payload: name
+    }
+}

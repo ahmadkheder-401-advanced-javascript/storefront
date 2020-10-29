@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -16,5 +17,5 @@ class Main extends React.Component {
   }
 }
 
-const rootElement = document.getElementById('root');
-ReactDOM.render(<Main />, rootElement);
+const root = document.getElementById('root');
+ReactDOM.render(<Main />, root);
