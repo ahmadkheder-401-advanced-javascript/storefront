@@ -1,8 +1,7 @@
 import superagent from 'superagent';
-
-
 let initialState = {
-  cartItem: []
+  cartItem: [],
+  drawer: false
 };
 
 export default (state = initialState, action) => {
@@ -25,10 +24,16 @@ export default (state = initialState, action) => {
       state.cartItem.splice(payload, 1);
       return { ...state };
 
+      case 'TOOGLE-DRAWER':
+
+      return !state.drawer ;
+
     default:
       return state;
   }
 }
+
+
 let api = 'https://todos-api1.herokuapp.com/api/v1/carts';
 export const getCartAPI = () => dispatch => {
   return superagent.get(api)
@@ -38,11 +43,13 @@ export const getCartAPI = () => dispatch => {
 }
 
 export const createCart = (cartData) => dispatch => {
+  // console.log('cartData >>>',cartData);
   return superagent.post(api).send(cartData).then()
 }
 
 
 export const updateRemoteCart = (cartData) => async dispatch => {
+  // console.log('cartData', cartData);
   await superagent.put(`${api}/${cartData[0]._id}`).send(cartData);
 }
 
@@ -52,6 +59,7 @@ export const getCartAction = payload => {
     payload: payload
   }
 }
+
 export const addAction = productAddedToCart => {
   return {
     type: 'ADD',
@@ -62,5 +70,12 @@ export const removeFromCart = productRemoveFromCart => {
   return {
     type: 'REMOVE',
     payload: productRemoveFromCart
+  }
+}
+
+export const toggleDrawer = toggle => {
+  return {
+    type: 'TOOGLE-DRAWER',
+    payload: toggle
   }
 }

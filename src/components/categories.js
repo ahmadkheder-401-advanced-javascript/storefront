@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../store/categories';
 import { Box, ButtonGroup, Button, CssBaseline } from '@material-ui/core';
+
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -21,11 +22,13 @@ const useStyles = makeStyles((theme) => ({
         margin: 4,
     },
 }));
+
 const Status = props => {
 
     useEffect(() => {
         props.get();
     }, []);
+
     const classes = useStyles();
     return (
         <>
@@ -38,6 +41,7 @@ const Status = props => {
                     {props.categorieData.results.map((record, idx) => (
                         <Button key={idx} onClick={() => {
                             props.change(record.name)
+
                         }}>
                                 {record.name}
                          </Button>
@@ -49,11 +53,16 @@ const Status = props => {
         </>
     )
 }
+
+
 const mapStateToProps = state => ({
     categorieData: state.categorieData
 });
+
 const mapDispatchToProps = (dispatch) => ({
     change:  (name) => dispatch(actions.change(name)),
     get: () => dispatch(actions.getRemoteCategories())
 });
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(Status);

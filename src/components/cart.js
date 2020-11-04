@@ -110,4 +110,4 @@ const mapDispatchToProps = (dispatch, getState) => ({
     removeFromCart: (productidx) => dispatch(actions.removeFromCart(productidx)),
     incrementInStock: (product) => dispatch(actionsProduct.incrementInStock(product)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

@@ -1,20 +1,17 @@
 import superagent from 'superagent' ;
 
-
 let initialState = {
     results: [],
     activeCategory: '',
 };
-
-
 export default (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
         case 'GETCATEGORIES':
-            // state.categories = [...payload.results]
-            // return {...state};
+
             return payload;
+
         case 'change':
             state.activeCategory = payload;
             return {...state };
@@ -23,7 +20,6 @@ export default (state = initialState, action) => {
             return state;
     }
 }
-
 export const change = (name) => {
     return {
         type: 'change',
@@ -31,10 +27,7 @@ export const change = (name) => {
 
     }
 }
-
-
-
-export const getRemoteCategories =  () => dispatch => {
+export const getRemoteCategories =  () => (dispatch) => {
     var api = 'https://todos-api1.herokuapp.com/api/v1/categories';
 
     return superagent.get(api)
@@ -42,11 +35,9 @@ export const getRemoteCategories =  () => dispatch => {
         dispatch(getActionCategories(data.body));
     })
 }
-
-
 export const getActionCategories = payload => {
     return {
-        type: 'GETCATEGORIES' ,
+        type: 'GETCATEGORIES',
         payload : payload
     }
 }
